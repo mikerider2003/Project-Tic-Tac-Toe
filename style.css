@@ -1,0 +1,78 @@
+:root {
+    --background-color: #4F4557;
+
+    --color-1: #af97ff;
+    --color-2: #d467ff;
+    --color-3: #EC53B0;
+
+    --shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+body {
+    font-family: 'Archivo Black', 'Rubik Iso', sans-serif;
+    background-color: var(--background-color);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.name {
+    margin: 2rem 0;
+    display: flex;
+    gap: 1rem;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: 900;
+}
+
+.color1 {
+    color: var(--color-1);
+}
+
+.color2 {
+    color: var(--color-2);
+}
+
+.color3 {
+    color: var(--color-3);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.box {
+    width: 150px;
+    background-color: var(--color-1);
+    border-radius: 10px;
+    aspect-ratio: 1;
+    box-shadow: var(--shadow);
+    text-align: center;
+    font-size: 150px;
+    user-select: none;
+}
+
+@media screen and (max-width: 700px){
+    .name {
+        flex-direction: column;
+        gap: 0;
+        align-items: center;
+    }
+
+    .container {
+        gap: 2vw;
+    }
+
+    .box {
+        width: 30vw;
+        font-size: 30vw;
+    }
+}
