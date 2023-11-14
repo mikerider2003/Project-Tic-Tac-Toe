@@ -14,14 +14,25 @@ const player2 = Player("Player 2", "O");
 
 
 
-function GameBoard() {
+const GameBoard = (function (){
     const gameboard = ["", "", "", "", "", "", "", "", ""];
+    
+    const playerscore1 = document.getElementById("score1")
+    const playerscore2 = document.getElementById("score2")
+    
     let playerturn = player1;
+
+    const renderscore = (selector, player) => {
+        selector.textContent = `${player.mark}: ${player.displayScore()}`
+    }
 
     const renderboard = (boxes) => {
         gameboard.forEach((value, index) => {
             boxes[index].textContent = value;
         });
+
+        renderscore(playerscore1, player1)
+        renderscore(playerscore2, player2)
     }
 
     const checkplaceempty = (position) => {
@@ -52,20 +63,22 @@ function GameBoard() {
             // console.log(element[0] === element[1] === element[2] && element[0] != "" && element[1] != "" && element[2] != "")
         })
     }
-
+    
     return {renderboard, addplace}
-};
+})();
 
-const game = GameBoard();
+
+
 const boxes = document.querySelectorAll(".box")
 
-
+// Initial render of the board
+GameBoard.renderboard(boxes)
 
 boxes.forEach(box => {
     box.addEventListener("click", () => {
         
-        game.addplace(Number(box.id[box.id.length - 1]) - 1)
-        game.renderboard(boxes)
+        GameBoard.addplace(Number(box.id[box.id.length - 1]) - 1)
+        GameBoard.renderboard(boxes)
 
     })  
 });
