@@ -55,7 +55,8 @@ const GameBoard = (function (){
     }
 
     const checkforwinner = () => {
-        // Not working yet !!!!!! do not forget to implement !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // TO DO: Not working yet !!!!!! do not forget to implement !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // Check for rows, columns and diagonals for same symbols
 
         const rows = [gameboard.slice(0,3), gameboard.slice(3,6), gameboard.slice(6,10)]
         rows.forEach(element => {
@@ -74,9 +75,10 @@ const boxes = document.querySelectorAll(".box")
 // Initial render of the board
 GameBoard.renderboard(boxes)
 
+// Listening for clicks
 boxes.forEach(box => {
     box.addEventListener("click", () => {
-        
+
         GameBoard.addplace(Number(box.id[box.id.length - 1]) - 1)
         GameBoard.renderboard(boxes)
 
