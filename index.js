@@ -1,7 +1,7 @@
 function Player(playerName, playerMark){
     const name = playerName;
     const mark = playerMark;
-    const score = 0;
+    let score = 0;
 
     const addScore = () => score++;
     const displayScore = () => score;
@@ -15,7 +15,7 @@ const player2 = Player("Player 2", "O");
 
 
 const GameBoard = (function (){
-    const gameboard = ["", "", "", "", "", "", "", "", ""];
+    let gameboard = ["", "", "", "", "", "", "", "", ""];
     
     const playerscore1 = document.getElementById("score1")
     const playerscore2 = document.getElementById("score2")
@@ -43,7 +43,7 @@ const GameBoard = (function (){
         if(checkplaceempty(position))
         {
             gameboard[position] = playerturn.mark;
-            checkforwinner();
+            checkforwinner(playerturn);
             changeplayerturn();
         } else {
             console.log("ALREADY OCOPIED PLACE!")
@@ -54,14 +54,56 @@ const GameBoard = (function (){
         playerturn === player1 ? playerturn = player2 : playerturn = player1; 
     }
 
-    const checkforwinner = () => {
-        // TO DO: Not working yet !!!!!! do not forget to implement !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    const checkforwinner = (player) => {
         // Check for rows, columns and diagonals for same symbols
 
-        const rows = [gameboard.slice(0,3), gameboard.slice(3,6), gameboard.slice(6,10)]
-        rows.forEach(element => {
-            // console.log(element)
-            // console.log(element[0] === element[1] === element[2] && element[0] != "" && element[1] != "" && element[2] != "")
+        // Check for the rows
+        const rows = [gameboard.slice(0,3), gameboard.slice(3,6), gameboard.slice(6,9)]
+        if (rows.some(row => row.every(mark => mark === player.mark))){
+            winnerfound()
+        }
+
+
+        // Check for colmuns
+        const colmuns = [
+            [gameboard[0],gameboard[3], gameboard[6]], 
+            [gameboard[1],gameboard[4], gameboard[7]], 
+            [gameboard[2],gameboard[5], gameboard[8]]]
+
+        if (colmuns.some(colmun => colmun.every(mark => mark === player.mark))){
+            winnerfound()
+        }
+
+        // Check for diagonals
+        const diagonals = [
+            [gameboard[0],gameboard[4], gameboard[8]], 
+            [gameboard[2], gameboard[4], gameboard[6]]]
+
+        if (diagonals.some(diagonal => diagonal.every(mark => mark === player.mark))){
+            winnerfound()
+        }
+    }
+
+    const winnerfound = () => {
+        playerturn.addScore()
+            
+            // Disable clicking other boxes
+            boxes.forEach(box => {
+                box.classList.add("box-disable")
+            })
+
+            // Clear the board
+            setTimeout(clearboard, 3000);
+    }
+
+    const clearboard = () => {
+        gameboard = ["", "", "", "", "", "", "", "", ""];
+
+        renderboard(boxes)
+
+        // Re-anable clicking boxes
+        boxes.forEach(box => {
+            box.classList.remove("box-disable")
         })
     }
     
